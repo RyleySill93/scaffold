@@ -1,0 +1,39 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3050:80'
+  backend:
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./backend
+    volumes:
+      - ./backend:/app
+    environment:
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres_password
+      - PGPORT=5432
+      - DB_HOST=postgres
+#      - S3_BUCKET=${S3_BUCKET}
+#      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+#      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+#      - SECRET_KEY=7i88+by@=%oqj2gwr_e_*t)5lyhx*w-@lrhq0thgz4g(+mp!i!
+    ports:
+      - '8000:8000'
+    depends_on:
+      - postgres
+  frontend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app

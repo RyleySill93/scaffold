@@ -1,0 +1,17 @@
+Django==3.0.2
+djangorestframework==3.10.0
+django-cors-headers==3.2.1
+django-extensions==2.2.6
+django-filter==2.2.0
+ipdb==0.12.3
+whitenoise==5.0.1
+gunicorn==20.0.4
+boto3==1.11.9
+psycopg2==2.8.4
+uWSGI==2.0.18
+flake8==3.7.9
+requests==2.22.0
+sentry-sdk==0.13.5
+python-decouple==3.3
+djangorestframework-simplejwt
+cryptography

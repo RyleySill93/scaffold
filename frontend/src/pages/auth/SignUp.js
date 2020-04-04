@@ -15,8 +15,10 @@ import {
   Grid,
   Link,
 } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import { spacing } from "@material-ui/system";
 import FormikInput from "../../formik/FormikInput";
+import FormikAlert from "../../formik/FormikAlert";
 
 const Button = styled(MuiButton)(spacing);
 
@@ -32,15 +34,6 @@ function SignUp({ signUp }) {
   return (
     <Wrapper>
       <Helmet title="Register" />
-      <Typography component="h1" variant="h4" align="center" gutterBottom>
-        Create your account
-      </Typography>
-      <Typography component="h2" variant="body1" align="center">
-        Already have an account?&nbsp;
-        <Link component={NavLink} to="/auth/sign-in">
-          Sign in.
-        </Link>
-      </Typography>
       <Formik
         initialValues={{
           firstName: '',
@@ -62,9 +55,22 @@ function SignUp({ signUp }) {
             .required('Required')
         })
         }
-        onSubmit={values => signUp(values)}
+        onSubmit={(values, actions) => signUp(values, actions.setStatus)}
       >
         <Form>
+          <Typography component="h1" variant="h4" align="center" gutterBottom>
+            Create your account
+          </Typography>
+          <Typography component="h2" variant="body1" align="center">
+            Already have an account?&nbsp;
+            <Link component={NavLink} to="/auth/sign-in">
+              Sign in.
+            </Link>
+          </Typography>
+          <FormikAlert
+            severity="error"
+            name="formError"
+          />
           <Grid container spacing={6}>
             <Grid item md={6}>
               <FormControl fullWidth mb={3}>
@@ -122,7 +128,7 @@ function SignUp({ signUp }) {
 }
 
 const mapDispatchToProps = dispatch => ({
-    signUp: payload => dispatch(actions.signUp(payload)),
+  signUp: (payload, setStatus) => dispatch(actions.signUp(payload, setStatus)),
 });
 
 export default connect(null, mapDispatchToProps)(SignUp);

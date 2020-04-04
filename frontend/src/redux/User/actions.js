@@ -18,20 +18,21 @@ export function signUserOut() {
     }
 }
 
-
 // SAGA ACTIONS
-export function signUp(payload) {
+export function signUp(payload, setStatus) {
     return {
         type: SIGN_UP,
         payload,
-    }
+        setStatus,
+    };
 }
 
-export function signIn(payload) {
+export function signIn(payload, setStatus) {
     return {
         type: SIGN_IN,
         payload,
-    }
+        setStatus,
+    };
 }
 
 export function signOut() {

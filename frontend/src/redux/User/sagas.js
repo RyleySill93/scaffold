@@ -9,7 +9,9 @@ function* signUp(action) {
         yield call(api.signUp, action.payload);
         yield put(actions.signIn(action.payload));
     } catch (e) {
-        debugger
+        if (e.response.data.username) {
+            action.setStatus({ formError: e.response.data.username[0] });
+        }
     }
 }
 
@@ -20,7 +22,9 @@ function* signIn(action) {
         localStorage.setItem("access", tokens.access);
         yield put(actions.signUserIn());
     } catch (e) {
-        debugger
+        if (e.response.data.detail) {
+            action.setStatus({ formError: e.response.data.detail });
+        }
     }
 }
 
